@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dogs List</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff6347;
+      margin-top: 30px;
+      font-size: 2em;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      width: 250px;
+      font-size: 1em;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      padding: 8px 15px;
+      font-size: 1em;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ff4500;
+    }
+
+    .dog-list-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .dog-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 280px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .dog-card:hover {
+      transform: scale(1.02);
+    }
+
+    .dog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .dog-card h3 {
+      color: #ff6347;
+      font-size: 1.6em;
+    }
+
+    .dog-card strong {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .apply-button {
+      padding: 10px 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .apply-button:hover {
+      background-color: #ff4500;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.8em;
+      color: #ff6347;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .logout-btn:hover {
+      color: #ff4500;
+    }
+
+    .message-btn {
+      font-size: 1.8em;
+      color: #ff6347;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .message-btn:hover {
+      color: #ff4500;
+    }
+
+    .health-care-btn {
+      padding: 5px 10px;
+      margin-top: 10px;
+      background-color: transparent;
+      border: 1px solid #ff6347;
+      color: #ff6347;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .health-care-btn:hover {
+      background-color: #ff6347;
+      color: white;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: auto;
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .top-left-buttons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .dog-card {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .dog-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top-left corner buttons -->
+  <div class="top-left-buttons">
+    <button class="message-btn" onclick="window.location.href='{{ url_for('messages') }}'">
+      <i class="fas fa-envelope"></i>
+    </button>
+
+    <button class="message-btn" onclick="openGlobalModal()">
+      <i class="fas fa-info-circle"></i>
+    </button>
+  </div>
+
+  <!-- Logout -->
+  <button class="logout-btn" onclick="window.location.href='{{ url_for('logout') }}'">
+    <i class="fas fa-sign-out-alt"></i>
+  </button>
+
+  <h2>Welcome, {{ user }}!</h2>
+
+  <!-- Search Form -->
+  <form method="GET" action="{{ url_for('dogs') }}">
+    <input type="text" name="search" placeholder="Search by name or breed">
+    <input type="submit" value="Search">
+  </form>
+
+  <!-- Dog List Grid -->
+  <div class="dog-list-container">
+    {% for dog in dogs %}
+      <div class="dog-card">
+        <h3>{{ dog.name }} ({{ dog.breed }})</h3>
+        <img src="{{ dog.image_url }}" alt="{{ dog.name }}"><br>
+        <strong>Age:</strong> {{ dog.age }}<br>
+        <strong>Status:</strong> {{ dog.status }}<br>
+
+        {% set found = false %}
+        {% for app in user_applications %}
+          {% if app.dog_id == dog.id %}
+            <p><strong>Application Status:</strong> {{ app.status|capitalize }}</p>
+            {% set found = true %}
+          {% endif %}
+        {% endfor %}
+
+        {% if not found and dog.status != 'Adopted' %}
+          <form action="{{ url_for('apply_for_adoption', dog_id=dog.id) }}" method="POST">
+            <button type="submit" class="apply-button">Apply for Adoption</button>
+          </form>
+        {% endif %}
+
+        <button class="health-care-btn" onclick="openModal('{{ dog.name }}', '{{ dog.breed }}')">
+          <i class="fas fa-info-circle"></i> Health Tips
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Modal -->
+  <div id="healthcareModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Health Care Tips for <span id="dog-name"></span></h3>
+      <p id="healthcare-tips">Tips will appear here...</p>
+    </div>
+  </div>
+
+  <script>
+    const healthTipsByBreed = {
+      'Labrador': [
+        "Watch for hip dysplasia symptoms.",
+        "Maintain a healthy weight to prevent joint strain.",
+        "Frequent exercise is essential to burn their high energy."
+      ],
+      'Shih Tzu': [
+        "Brush their coat daily to prevent matting.",
+        "Clean tear stains regularly.",
+        "They’re prone to dental problems—regular teeth brushing is key."
+      ],
+      'German Shepherd': [
+        "Regular hip and elbow checks are necessary.",
+        "Engage them mentally with training and play.",
+        "Monitor for digestive sensitivities."
+      ]
+    };
+
+    function openModal(dogName, breed) {
+      document.getElementById("dog-name").innerText = dogName;
+      let tips = healthTipsByBreed[breed] || [
+        "Provide regular meals and water.",
+        "Take your dog for daily walks.",
+        "Consult a vet for personalized advice."
+      ];
+      const tipList = tips.map(tip => `<li>${tip}</li>`).join("");
+      document.getElementById("healthcare-tips").innerHTML = `<ul>${tipList}</ul>`;
+      document.getElementById("healthcareModal").style.display = "block";
+    }
+
+    function openGlobalModal() {
+      document.getElementById("dog-name").innerText = "Your Dog";
+      document.getElementById("healthcare-tips").innerHTML = `
+        <ul>
+          <li>Feed a balanced, age-appropriate diet.</li>
+          <li>Ensure daily exercise to maintain a healthy weight.</li>
+          <li>Visit the vet regularly for checkups and vaccinations.</li>
+          <li>Keep your dog well-hydrated at all times.</li>
+          <li>Brush their coat regularly to prevent mats and shedding.</li>
+          <li>Practice dental hygiene by brushing teeth or using dental treats.</li>
+          <li>Use flea, tick, and heartworm preventatives consistently.</li>
+          <li>Trim your dog’s nails every 3–4 weeks or as needed.</li>
+          <li>Keep their ears clean and dry to avoid infections.</li>
+          <li>Provide mental stimulation through play, training, and interaction.</li>
+        </ul>`;
+      document.getElementById("healthcareModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("healthcareModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("healthcareModal")) {
+        closeModal();
+      }
+    };
+  </script>
+
+</body>
+</html>

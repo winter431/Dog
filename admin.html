@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f6f8;
+      color: #2c3e50;
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+      padding: 30px 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
+      color: #fff;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 1.5em;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      margin: 15px 0;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a i {
+      margin-right: 12px;
+      font-size: 1.2em;
+    }
+
+    .sidebar a:hover {
+      transform: translateX(5px);
+      color: #ffd6cc;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 40px;
+      flex-grow: 1;
+    }
+
+    h2, h3, h4 {
+      color: #d35400;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #fafafa;
+      font-size: 1em;
+    }
+
+    input[type="submit"],
+    button {
+      background: linear-gradient(135deg, #ff9966, #ff5e62);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 94, 98, 0.4);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    input[type="submit"]:hover,
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    }
+
+    .dog-card {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .dog-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .dog-card img {
+      width: 200px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .dog-details {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .dog-details p {
+      margin: 6px 0;
+    }
+
+    .dog-details a {
+      display: inline-block;
+      margin-right: 15px;
+      margin-top: 10px;
+      color: #e67e22;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .dog-details a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden-details {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .logout-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2><i class="fas fa-paw"></i> PawMatch</h2>
+    <a href="{{ url_for('add_dog') }}"><i class="fas fa-plus-circle"></i> Add Dog</a>
+    <a href="#current-dogs"><i class="fas fa-dog"></i> Current Dogs</a>
+    <a href="{{ url_for('adopted_dogs') }}"><i class="fas fa-heart"></i> Adopted Dogs</a>
+    <a href="#applications"><i class="fas fa-file-alt"></i> Applications</a>
+    <a href="{{ url_for('logout') }}" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content" id="main-content">
+    <h3 id="current-dogs">Current Dogs</h3>
+    {% for dog in dogs %}
+      {% if dog.status != 'Adopted' %}
+        <div class="dog-card">
+          <div class="dog-content">
+            <img src="{{ dog.image_url }}" alt="{{ dog.name }}">
+            <div class="dog-details">
+              <h4>{{ dog.name }} ({{ dog.breed }})</h4>
+              <p><strong>Age:</strong> {{ dog.age }}</p>
+              <p><strong>Status:</strong> {{ dog.status }}</p>
+
+              <!-- Toggle Button -->
+              <button onclick="toggleDetails('details-{{ dog.id }}')">View Details</button>
+
+              <!-- Hidden details section -->
+              <div id="details-{{ dog.id }}" class="hidden-details">
+                {% if dog.size %}<p><strong>Size:</strong> {{ dog.size }}</p>{% endif %}
+                {% if dog.temperament %}<p><strong>Temperament:</strong> {{ dog.temperament }}</p>{% endif %}
+                {% if dog.medical_history %}<p><strong>Medical History:</strong> {{ dog.medical_history }}</p>{% endif %}
+                {% if dog.special_needs %}<p><strong>Special Needs:</strong> {{ dog.special_needs }}</p>{% endif %}
+              </div>
+
+              <!-- Action Links -->
+              <a href="{{ url_for('edit_dog', dog_id=dog.id) }}">Edit</a>
+              <a href="{{ url_for('delete_dog', dog_id=dog.id) }}" onclick="return confirm('Are you sure you want to delete this dog?');">Delete</a>
+              <a href="{{ url_for('mark_adopted', dog_id=dog.id) }}" onclick="return confirm('Mark this dog as adopted?');">Mark as Adopted</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <h2 id="applications">Adoption Applications</h2>
+    {% for application in applications %}
+      <div class="application">
+        <p><strong>{{ application.user.name }}</strong> has applied for <strong>{{ application.dog.name }}</strong>.</p>
+        <p>Status: <strong>{{ application.status }}</strong></p>
+
+        {% if application.status == 'pending' %}
+          <form action="{{ url_for('approve_adoption', application_id=application.id) }}" method="POST" style="display:inline;">
+  <button type="submit">Approve</button>
+</form>
+
+          <form action="{{ url_for('deny_adoption', application_id=application.id) }}" method="POST" style="display:inline;">
+            <button type="submit">Deny</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      if (el.style.display === "none") {
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

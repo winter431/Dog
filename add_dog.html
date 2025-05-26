@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Dog</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      background-image: url('https://www.transparenttextures.com/patterns/petroleum.png');
+      color: #2c3e50;
+      margin: 0;
+      padding: 50px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 600px;
+      background-image: url('https://www.transparenttextures.com/patterns/petroleum.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    h2 {
+      color: #e67e22;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fafafa;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="file"]:focus {
+      border-color: #e67e22;
+      background-color: #fef9f4;
+      outline: none;
+    }
+
+    .form-actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    input[type="submit"] {
+      background-color: #e67e22;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #d35400;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      text-decoration: none;
+      color: #e67e22;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Add paw prints background image to create a pet-theme */
+    body {
+      background-image: url('https://www.transparenttextures.com/patterns/paw-print.png');
+      background-repeat: repeat;
+    }
+
+    .form-group input[type="text"], 
+    .form-group input[type="file"] {
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* For added flare: Paw print on the button hover */
+    input[type="submit"]:hover {
+      background-color: #d35400;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Add New Dog</h2>
+
+    <form method="POST" action="{{ url_for('dogs') }}" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input type="text" name="name" id="name" placeholder="Dog's Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="breed">Breed *</label>
+        <input type="text" name="breed" id="breed" placeholder="Breed" required>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age *</label>
+        <input type="text" name="age" id="age" placeholder="Age" required>
+      </div>
+
+      <div class="form-group">
+        <label for="size">Size *</label>
+        <input type="text" name="size" id="size" placeholder="Size (e.g. Small, Medium, Large)" required>
+      </div>
+
+      <div class="form-group">
+        <label for="temperament">Temperament</label>
+        <input type="text" name="temperament" id="temperament" placeholder="Friendly, Shy, Active, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="medical_history">Medical History</label>
+        <input type="text" name="medical_history" id="medical_history" placeholder="Any medical notes">
+      </div>
+
+      <div class="form-group">
+        <label for="special_needs">Special Needs</label>
+        <input type="text" name="special_needs" id="special_needs" placeholder="Diet, mobility, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <input type="text" name="status" id="status" placeholder="Available, Pending, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="image">Upload Image</label>
+        <input type="file" name="image" id="image">
+      </div>
+
+      <div class="form-actions">
+        <input type="submit" value="Add Dog">
+      </div>
+    </form>
+
+    <a href="{{ url_for('admin_dashboard') }}" class="back-link">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

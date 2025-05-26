@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paw Match Landing Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #2c3e50;
+      color: #ecf0f1;
+    }
+
+    .container {
+      width: 85%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #34495e, #1abc9c);
+      color: #fff;
+      text-align: center;
+      padding: 80px 0;
+      position: relative;
+      border-bottom: 2px solid #16a085;
+    }
+
+    .header h1 {
+      font-size: 4em;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.4em;
+      font-weight: lighter;
+    }
+
+    .btn-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .btn {
+      background-color: #f39c12;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1em;
+      margin-left: 10px;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-color: #e67e22;
+      transform: translateY(-4px);
+    }
+
+    .dog-icon {
+      font-size: 6em;
+      text-align: center;
+      margin-top: 30px;
+      animation: bounce 1s infinite;
+      color: #f39c12;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .content {
+      padding: 60px 0;
+      text-align: center;
+      background-color: #34495e;
+      margin-top: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .content h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #f39c12;
+    }
+
+    .content p {
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: auto;
+      color: #bdc3c7;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 60px 0;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 1200px;
+    }
+
+    .info-card {
+      flex: 1;
+      background-color: #1abc9c;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .info-card h3 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .info-card p {
+      color: #ecf0f1;
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+
+    footer {
+      background-color: #34495e;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 1em;
+      margin-top: 40px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    footer a {
+      color: #f39c12;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .info-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <h1>Paw Match</h1>
+      <p>Find your perfect furry companion!</p>
+
+      <div class="btn-container">
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+        <a href="{{ url_for('register') }}" class="btn">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dog Icon -->
+  <div class="dog-icon">🐕</div>
+
+  <!-- Hero Content -->
+  <section class="content">
+    <div class="container">
+      <h2>Join Our Paw-some Community!</h2>
+      <p>Connect with fellow animal lovers, share pet stories, find adoptable pets, and build a pet-friendly network.</p>
+    </div>
+  </section>
+
+  <!-- Info Row: About, Privacy, Terms -->
+  <section class="info-row">
+    <div class="info-card">
+      <h3>About</h3>
+      <p>Paw Match helps people connect through pets. Whether you're looking to adopt or just share your love for animals, we’ve got you covered!</p>
+    </div>
+    <div class="info-card">
+      <h3>Privacy</h3>
+      <p>Your data is safe with us. We value your privacy and never share your info without consent.</p>
+    </div>
+    <div class="info-card">
+      <h3>Terms</h3>
+      <p>By joining Paw Match, you agree to respect all users and follow our friendly, pet-loving community rules.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Paw Match. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

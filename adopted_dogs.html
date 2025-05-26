@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopted Dogs</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #ff69b4;
+            font-size: 2.5em;
+        }
+
+        .dog-card {
+            display: inline-block;
+            width: 250px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .dog-card:hover {
+            transform: scale(1.05);
+        }
+
+        .dog-card img {
+            width: 100%;
+            border-radius: 10px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .dog-card h4 {
+            font-size: 1.6em;
+            color: #ff6347;
+            margin: 10px 0;
+        }
+
+        .dog-card b {
+            font-weight: bold;
+        }
+
+        .dog-card p {
+            color: #555;
+        }
+
+        .no-dogs-message {
+            font-size: 1.2em;
+            color: #ff4500;
+            margin-top: 20px;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <h2>Adopted Dogs</h2>
+    
+    {% if dogs %}
+        <div class="dogs-list">
+            {% for dog in dogs %}
+                <div class="dog-card">
+                    <h4>{{ dog.name }} ({{ dog.breed }})</h4>
+                    <img src="{{ dog.image_url }}" alt="{{ dog.name }}"><br>
+                    <b>Age:</b> {{ dog.age }}<br>
+                    <b>Status:</b> {{ dog.status }}<br>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-dogs-message">No dogs have been adopted yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a>
+</body>
+</html>

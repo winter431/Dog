@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head><title>Edit Dog</title></head>
+<body>
+  <h2>Edit Dog: {{ dog.name }}</h2>
+  <form method="POST">
+    Name: <input type="text" name="name" value="{{ dog.name }}"><br>
+    Breed: <input type="text" name="breed" value="{{ dog.breed }}"><br>
+    Age: <input type="text" name="age" value="{{ dog.age }}"><br>
+    Size: <input type="text" name="size" value="{{ dog.size }}"><br>
+    Temperament: <input type="text" name="temperament" value="{{ dog.temperament }}"><br>
+    Medical History: <input type="text" name="medical_history" value="{{ dog.medical_history }}"><br>
+    Special Needs: <input type="text" name="special_needs" value="{{ dog.special_needs }}"><br>
+    Status: <input type="text" name="status" value="{{ dog.status }}"><br>
+    
+<input type="file" name="image">
+ {{ dog.image_url }}<br>
+    <input type="submit" value="Save Changes">
+  </form>
+
+  <br>
+  <a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a>
+</body>
+</html>
